@@ -1,0 +1,14 @@
+README.md
+setup.py
+self_vault.egg-info/PKG-INFO
+self_vault.egg-info/SOURCES.txt
+self_vault.egg-info/dependency_links.txt
+self_vault.egg-info/entry_points.txt
+self_vault.egg-info/requires.txt
+self_vault.egg-info/top_level.txt
+vault/__init__.py
+vault/auth.py
+vault/cli.py
+vault/config.py
+vault/crypto.py
+vault/database.py

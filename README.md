@@ -57,7 +57,7 @@ pip install -r requirements.txt
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/itsemanj/personal_vault.git
+git clone https://github.com/itsemanj/private_safebox_Vault.git
 cd personal\ vault
 ```
 

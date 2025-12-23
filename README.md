@@ -1,4 +1,4 @@
-# 🔐 Self-Vault: Personal Encrypted Password Manager (CLI)
+# Self-Vault: Personal Encrypted Password Manager (CLI)
 
 A **secure, self-contained password vault** written in Python.
 All credentials are encrypted locally using **AES encryption** with a master password-derived key.
@@ -8,18 +8,18 @@ This is perfect for personal use and can be cloned from GitHub for your own vaul
 
 ---
 
-## ✨ Features
+##  Features
 
-* 🔒 AES-256 encryption with **PBKDF2HMAC key derivation**
-* 🧠 Master password authentication
-* 🗄️ SQLite-backed storage, fully self-contained
-* 💻 Interactive CLI, no coding required
-* ✅ Non-coder friendly commands
-* 🪄 Dynamic: no hardcoded credentials
+*  AES-256 encryption with **PBKDF2HMAC key derivation**
+*  Master password authentication
+*  SQLite-backed storage, fully self-contained
+*  Interactive CLI, no coding required
+*  Non-coder friendly commands
+*  Dynamic: no hardcoded credentials
 
 ---
 
-## 📦 Project Structure
+##  Project Structure
 
 ```
 self-vault/
@@ -39,7 +39,7 @@ self-vault/
 
 ---
 
-## 🛠 Requirements
+##  Requirements
 
 * Python 3.9+
 * `cryptography` library
@@ -52,7 +52,7 @@ pip install -r requirements.txt
 
 ---
 
-## ⚡ Installation
+##  Installation
 
 1. Clone the repository:
 
@@ -77,7 +77,7 @@ vault help
 
 ---
 
-## 🧩 CLI Commands
+##  CLI Commands
 
 | Command        | Description                                   |
 | -------------- | --------------------------------------------- |
@@ -91,7 +91,7 @@ vault help
 
 ---
 
-## 🏃 Example Usage
+##  Example Usage
 
 ```bash
 vault init
@@ -130,7 +130,7 @@ vault delete
 
 ---
 
-## 🔐 Security Notes
+##  Security Notes
 
 * The **master password** is never stored. It is used only to derive the encryption key.
 * The database (`vault.db`) and salt (`vault_salt.bin`) are stored locally in:
@@ -144,7 +144,7 @@ vault delete
 
 ---
 
-## 💡 Tips
+##  Tips
 
 * Use a **strong, unique master password**.
 * Back up `vault_salt.bin` securely.
@@ -153,7 +153,7 @@ vault delete
 
 ---
 
-## 🚀 Next Steps / Enhancements
+##  Next Steps / Enhancements
 
 * Add **password generator** for new credentials
 * Add **auto-lock** after inactivity
@@ -163,7 +163,7 @@ vault delete
 
 ---
 
-## ⚠️ Disclaimer
+##  Disclaimer
 
 This project is **for personal use and learning purposes**.
 Always audit and harden security before using for sensitive or production data.

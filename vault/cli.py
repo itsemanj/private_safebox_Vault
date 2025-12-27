@@ -70,21 +70,6 @@ def main():
             else:
                 print("No credentials stored.\n")
 
-        elif cmd == "get":
-            service = input("Enter service name: ").strip()
-            conn = get_connection()
-            c = conn.cursor()
-            c.execute("SELECT username, password FROM credentials WHERE service = ?", (service,))
-            row = c.fetchone()
-            conn.close()
-            if row:
-                try:
-                    print(tabulate([[service, decrypt(row[0], key), decrypt(row[1], key)]],
-                                   headers=["Service", "Username", "Password"]))
-                except Exception:
-                    print("Error decrypting this entry. Possibly corrupted.")
-            else:
-                print("Service not found.\n")
 
         elif cmd == "import":
             csv_path = input("Enter CSV file path: ").strip()
@@ -95,7 +80,7 @@ def main():
                 print(f"Error importing CSV: {e}")
 
         elif cmd == "help":
-            print("Available commands: add, list, get, import, exit\n")
+            print("Available commands: add, list, import, exit\n")
 
         else:
             print("Unknown command. Type 'help' to see commands.\n")

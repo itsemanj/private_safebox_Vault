@@ -1,170 +1,155 @@
-# Self-Vault: Personal Encrypted Password Manager (CLI)
+# Self-Vault
 
-A **secure, self-contained password vault** written in Python.
-All credentials are encrypted locally using **AES encryption** with a master password-derived key.
-No plaintext credentials are ever stored, and the database is stored locally using **SQLite**.
-
-This is perfect for personal use and can be cloned from GitHub for your own vault.
+A **secure, local password manager** for storing and managing usernames and passwords safely.
+All data is encrypted and can only be accessed with your **master password**.
 
 ---
 
-##  Features
+## Features
 
-*  AES-256 encryption with **PBKDF2HMAC key derivation**
-*  Master password authentication
-*  SQLite-backed storage, fully self-contained
-*  Interactive CLI, no coding required
-*  Non-coder friendly commands
-*  Dynamic: no hardcoded credentials
+* Vault unlocks with **one master password** per session.
+* Master password **cannot be changed** — if forgotten, all data is lost.
+* Store credentials for multiple services securely (Service, Username, Password).
+* Interactive CLI: add, list, get, import, exit.
+* Bulk import credentials via **CSV file**.
+* Displays all credentials in a **clean table format**.
 
 ---
 
-##  Project Structure
+## Security Notes
 
-```
-self-vault/
-│
-├── vault/
-│   ├── __init__.py
-│   ├── cli.py        # CLI commands
-│   ├── auth.py       # Master password handling
-│   ├── crypto.py     # Encryption / decryption
-│   ├── database.py   # SQLite storage
-│   └── config.py     # Paths for DB and salt
-│
-├── setup.py          # Install CLI entry point
-├── requirements.txt  # Python dependencies
-└── README.md
+* **AES-256 encryption** with PBKDF2-derived key.
+* Master password is never stored.
+* Vault is fully **private** — only accessible with the correct master password.
+* Forgetting the master password means the vault **cannot be recovered**.
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/self-vault.git
+cd self-vault
 ```
 
----
-
-##  Requirements
-
-* Python 3.9+
-* `cryptography` library
-
-Install dependencies:
+2. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-##  Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/itsemanj/private_safebox_Vault.git
-cd personal\ vault
-```
-
-2. Install in **editable mode** (recommended during development):
+3. Install the CLI tool locally:
 
 ```bash
 pip install -e .
 ```
 
-This allows any code changes to take effect immediately.
+---
 
-3. Verify the CLI command works:
+## Usage
+
+Run the vault:
 
 ```bash
-vault help
+vault
+```
+
+### Step 1: Initialize or Unlock Vault
+
+* **Initialize**: Set your master password (first time use).
+* **Unlock**: Enter the existing master password.
+
+---
+
+### Step 2: Commands
+
+Once inside the vault session:
+
+| Command  | Description                                                      |
+| -------- | ---------------------------------------------------------------- |
+| `add`    | Add a new credential (Service, Username, Password)               |
+| `list`   | List all stored credentials in a table                           |
+| `import` | Import credentials from a CSV file (`service,username,password`) |
+| `exit`   | Exit the vault session                                           |
+
+Example:
+
+```text
+vault> add
+Service name: GitHub
+Username: me@gmail.com
+Password: secret123
+GitHub saved successfully! ✔
+
+vault> list
+Service    Username        Password
+--------   ---------       ---------
+GitHub     me@gmail.com    secret123
+
+vault> exit
+Vault locked 🔒
 ```
 
 ---
 
-##  CLI Commands
+### Step 3: CSV Import Format
 
-| Command        | Description                                   |
-| -------------- | --------------------------------------------- |
-| `vault init`   | Create a new vault and set a master password  |
-| `vault login`  | Unlock the vault (prompt for master password) |
-| `vault add`    | Add a new service credential interactively    |
-| `vault list`   | List all saved services                       |
-| `vault get`    | Retrieve username & password for a service    |
-| `vault delete` | Delete a service from the vault               |
-| `vault help`   | Show all available commands                   |
+Your CSV file should have **headers**:
 
----
-
-##  Example Usage
-
-```bash
-vault init
-# Create your master password
+```csv
+service,username,password
+GitHub,me@gmail.com,secret123
+Google,user@gmail.com,password456
 ```
 
-```bash
-vault add
-# Service name: Gmail
-# Username: myemail@gmail.com
-# Password: ********
-# Saved ✔
-```
+Use the `import` command in the vault to load credentials:
 
-```bash
-vault list
-# Output:
-# Gmail
-# GitHub
-# Netflix
-```
-
-```bash
-vault get
-# Enter service name to retrieve: Gmail
-# Output:
-# Username: myemail@gmail.com
-# Password: ********
-```
-
-```bash
-vault delete
-# Enter service name to delete: Gmail
-# Deleted ✔
+```text
+vault> import
+Enter CSV file path: /path/to/credentials.csv
+CSV imported successfully! ✔
 ```
 
 ---
 
-##  Security Notes
-
-* The **master password** is never stored. It is used only to derive the encryption key.
-* The database (`vault.db`) and salt (`vault_salt.bin`) are stored locally in:
+## Project Structure
 
 ```
-~/.self_vault/
+self-vault/
+│
+├── vault/
+│   ├── cli.py          # Main interactive CLI
+│   ├── session.py      # Master password setup and verification
+│   ├── crypto.py       # AES encryption/decryption
+│   ├── database.py     # SQLite DB management
+│   ├── importer.py     # CSV import
+│   └── config.py       # Paths for DB and salt
+├── setup.py
+├── requirements.txt
+└── README.md
 ```
 
-* Losing the salt or master password **will prevent access to all stored credentials**.
-* SQLite file is encrypted, so even if stolen, the contents are protected.
+---
+
+## Dependencies
+
+* Python 3.8+
+* [cryptography](https://cryptography.io/)
+* [tabulate](https://pypi.org/project/tabulate/)
+
+Install via:
+
+```bash
+pip install cryptography tabulate
+```
 
 ---
 
-##  Tips
+## Important Notes
 
-* Use a **strong, unique master password**.
-* Back up `vault_salt.bin` securely.
-* Do not share your vault database file or salt.
-* For non-coders, all interactions are via simple CLI commands — no Python editing required.
-
----
-
-##  Next Steps / Enhancements
-
-* Add **password generator** for new credentials
-* Add **auto-lock** after inactivity
-* Export/import encrypted vaults
-* GUI version (Tkinter or PyQt)
-* Support cloud syncing with end-to-end encryption
-
----
-
-##  Disclaimer
-
-This project is **for personal use and learning purposes**.
-Always audit and harden security before using for sensitive or production data.
+* **Do not forget your master password** — there is no password recovery.
+* Vault data is stored locally in your home directory (`~/.self_vault/vault.db`).
+* For maximum security, keep your DB and salt file private.
 

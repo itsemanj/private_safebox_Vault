@@ -6,12 +6,11 @@ setup(
     packages=find_packages(),
     install_requires=[
         "cryptography>=41.0.0",
+        "tabulate"
     ],
     entry_points={
         "console_scripts": [
-            "vault=vault.cli:main",
-        ],
-    },
-    python_requires=">=3.9",
+            "vault=vault.cli:main"
+        ]
+    }
 )
-

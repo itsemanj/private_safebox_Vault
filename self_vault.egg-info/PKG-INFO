@@ -1,5 +1,5 @@
 Metadata-Version: 2.1
 Name: self-vault
 Version: 1.0.0
-Requires-Python: >=3.9
 Requires-Dist: cryptography>=41.0.0
+Requires-Dist: tabulate

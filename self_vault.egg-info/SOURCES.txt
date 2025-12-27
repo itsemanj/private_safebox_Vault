@@ -12,3 +12,5 @@ vault/cli.py
 vault/config.py
 vault/crypto.py
 vault/database.py
+vault/importer.py
+vault/session.py

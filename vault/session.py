@@ -2,7 +2,7 @@ import os
 from .config import SALT_PATH
 from .crypto import generate_key, encrypt, decrypt
 from .database import get_connection
-import base64
+from .database import init_db
 
 def create_salt():
     salt = os.urandom(16)
@@ -17,7 +17,6 @@ def load_salt():
         return f.read()
 
 def setup_vault(master_password: str):
-    from .database import init_db
     init_db()
     salt = create_salt()
     key = generate_key(master_password, salt)
@@ -39,7 +38,7 @@ def verify_master_password(master_password: str):
     row = c.fetchone()
     conn.close()
     if not row:
-        raise Exception("Vault not initialized. Run setup first.")
+        raise Exception("Vault not initialized.")
     try:
         decrypted = decrypt(row[0], key)
         if decrypted != "VAULT_UNLOCK_OK":

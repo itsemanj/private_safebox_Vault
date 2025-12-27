@@ -2,8 +2,7 @@ import sqlite3
 from .config import DB_PATH
 
 def get_connection():
-    conn = sqlite3.connect(DB_PATH)
-    return conn
+    return sqlite3.connect(DB_PATH)
 
 def init_db():
     conn = get_connection()

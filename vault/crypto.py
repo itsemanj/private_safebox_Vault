@@ -5,9 +5,8 @@ from cryptography.hazmat.backends import default_backend
 import os
 
 def generate_key(master_password: str, salt: bytes) -> bytes:
-    """Derive AES key from master password."""
     kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA256(),  # instance is important
+        algorithm=hashes.SHA256(),
         length=32,
         salt=salt,
         iterations=390000,
@@ -20,7 +19,7 @@ def encrypt(plaintext: str, key: bytes) -> bytes:
     cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=default_backend())
     encryptor = cipher.encryptor()
     ciphertext = encryptor.update(plaintext.encode()) + encryptor.finalize()
-    return iv + ciphertext  # prepend IV for decryption
+    return iv + ciphertext
 
 def decrypt(ciphertext: bytes, key: bytes) -> str:
     iv = ciphertext[:16]
